@@ -39,4 +39,9 @@ export class ScooterService {
       return distance <= radius;
     });
   }
+
+  async getOne(id: number): Promise<Scooter> {
+    const [scooter] = await this.scooterRepository.find({ where: [{ id }] });
+    return scooter;
+  }
 }

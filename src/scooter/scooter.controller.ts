@@ -6,6 +6,7 @@ import {
   Query,
   Res,
   HttpStatus,
+  Param,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ScooterService } from './scooter.service';
@@ -28,10 +29,27 @@ export class ScooterController {
         message: 'query is missing',
       });
     }
-    //how to deal with input 0
     return res.status(HttpStatus.OK).json({
       status_code: HttpStatus.OK,
       data: await this.scooterService.getAll(x, y, radius),
+    });
+  }
+
+  @Get(':id')
+  async getOne(@Param() params, @Res() res: Response) {
+    const { id } = params;
+
+    const scooter = await this.scooterService.getOne(id);
+    if (!scooter) {
+      return res.status(HttpStatus.NOT_FOUND).json({
+        status_code: HttpStatus.NOT_FOUND,
+        message: 'id not found',
+      });
+    }
+
+    return res.status(HttpStatus.OK).json({
+      status_code: HttpStatus.OK,
+      data: scooter,
     });
   }
 
