@@ -16,4 +16,10 @@ export class AdminService {
     const newScooter = await this.scooterRepository.save(scooter);
     return newScooter;
   }
+
+  async delete(id: number): Promise<boolean> {
+    const { affected } = await this.scooterRepository.delete({ id });
+
+    return affected ? true : false;
+  }
 }

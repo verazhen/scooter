@@ -1,8 +1,7 @@
 import {
   Controller,
-  Get,
   Post,
-  Patch,
+  Delete,
   Body,
   Query,
   Res,
@@ -17,10 +16,27 @@ import { ScooterCharge } from '../scooter/scooter_charge.entity';
 
 @Controller('admin/scooter')
 export class AdminController {
-  constructor(private readonly scooterService: AdminService) {}
+  constructor(private readonly adminService: AdminService) {}
 
   @Post()
   async create(@Body() scooter: Scooter) {
-    return this.scooterService.create(scooter);
+    return this.adminService.create(scooter);
+  }
+
+  @Delete(':id')
+  async delete(@Param() params, @Res() res: Response) {
+    let { id } = params;
+    const result = await this.adminService.delete(id);
+    if (!result) {
+      return res.status(HttpStatus.NOT_FOUND).json({
+        status_code: HttpStatus.NOT_FOUND,
+        message: 'id not found',
+      });
+    }
+
+    return res.status(HttpStatus.OK).json({
+      status_code: HttpStatus.OK,
+      message: 'delete successfully',
+    });
   }
 }
