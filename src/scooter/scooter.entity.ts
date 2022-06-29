@@ -1,11 +1,47 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+import { ScooterStatus } from './scooter_status.entity';
+import { ScooterCharge } from './scooter_charge.entity';
 
 @Entity()
 export class Scooter {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({length:7})
+  @Column({ type: 'varchar', length: 7, unique: true })
   license: string;
 
+  @Column({ type: 'smallint' })
+  battery: number;
+
+  @Column({ type: 'smallint' })
+  mileage: number;
+
+  @Column({ type: 'smallint' })
+  latitude: number;
+
+  @Column({ type: 'smallint' })
+  longtitude: number;
+
+  @ManyToOne(() => ScooterStatus, (status) => status.id)
+  status_id: ScooterStatus;
+
+  @ManyToOne(() => ScooterStatus, (charge) => charge.id)
+  charge_id: ScooterCharge;
+
+  @CreateDateColumn()
+  manufature_dt: Date;
+
+  @Column({ type: 'datetime' })
+  register_dt: Date;
+
+  @UpdateDateColumn()
+  update_dt: Date;
 }
