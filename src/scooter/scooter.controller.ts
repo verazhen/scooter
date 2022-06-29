@@ -74,9 +74,4 @@ export class ScooterController {
 
     return this.scooterService.update(scooterUpdate);
   }
-
-  @Post()
-  async create(@Body() scooter: Scooter) {
-    return this.scooterService.create(scooter);
-  }
 }

@@ -18,11 +18,6 @@ export class ScooterService {
     private scooterRepository: Repository<Scooter>,
   ) {}
 
-  async create(scooter: Scooter): Promise<Scooter> {
-    const newScooter = await this.scooterRepository.save(scooter);
-    return newScooter;
-  }
-
   async getAll(x: number, y: number, radius: number): Promise<Scooter[]> {
     const scooters = await this.scooterRepository.find({
       select: ['id', 'latitude', 'longitude'],

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScooterModule } from './scooter/scooter.module';
+import { AdminModule } from './admin/admin.module';
 import { Scooter } from './scooter/scooter.entity';
 import { ScooterStatus } from './scooter/scooter_status.entity';
 import { ScooterCharge } from './scooter/scooter_charge.entity';
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
       synchronize: true,
     }),
     ScooterModule,
+    AdminModule,
   ],
 })
 export class AppModule {}
