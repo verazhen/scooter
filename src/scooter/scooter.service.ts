@@ -23,17 +23,17 @@ export class ScooterService {
 
   async getAll(x: number, y: number, radius: number): Promise<Scooter[]> {
     const scooters = await this.scooterRepository.find({
-      select: ['id', 'latitude', 'longtitude'],
+      select: ['id', 'latitude', 'longitude'],
       where: [
         {
           latitude: Between(x - radius, x + radius),
-          longtitude: Between(y - radius, y + radius),
+          longitude: Between(y - radius, y + radius),
         },
       ],
     });
     return scooters.filter((scooter) => {
       const distance = getDistance(
-        [scooter.latitude, scooter.longtitude],
+        [scooter.latitude, scooter.longitude],
         [x, y],
       );
       return distance <= radius;

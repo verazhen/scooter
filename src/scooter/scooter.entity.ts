@@ -1,6 +1,7 @@
 import {
   Entity,
   Column,
+  Index,
   PrimaryGeneratedColumn,
   ManyToOne,
   CreateDateColumn,
@@ -24,11 +25,13 @@ export class Scooter {
   @Column({ type: 'smallint' })
   mileage: number;
 
+  @Index()
   @Column({ type: 'smallint' })
   latitude: number;
 
+  @Index()
   @Column({ type: 'smallint' })
-  longtitude: number;
+  longitude: number;
 
   @ManyToOne(() => ScooterStatus, (status) => status.id)
   status_id: ScooterStatus;
