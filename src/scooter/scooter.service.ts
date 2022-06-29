@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
 import { Scooter } from './scooter.entity';
+import { ScooterStatus } from './scooter_status.entity';
+import { ScooterCharge } from './scooter_charge.entity';
 
 function getDistance(loc1: [number, number], loc2: [number, number]): number {
   return Math.sqrt(
@@ -43,5 +45,18 @@ export class ScooterService {
   async getOne(id: number): Promise<Scooter> {
     const [scooter] = await this.scooterRepository.find({ where: [{ id }] });
     return scooter;
+  }
+
+  async update(scooter: {
+    id: number;
+    battery: number;
+    mileage: number;
+    latitude: number;
+    longitude: number;
+    status_id: ScooterStatus;
+    charge_id: ScooterCharge;
+  }): Promise<Scooter> {
+    const updateScooter = await this.scooterRepository.save(scooter);
+    return updateScooter;
   }
 }

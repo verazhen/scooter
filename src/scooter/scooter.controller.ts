@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Body,
   Query,
   Res,
@@ -11,6 +12,8 @@ import {
 import { Response } from 'express';
 import { ScooterService } from './scooter.service';
 import { Scooter } from './scooter.entity';
+import { ScooterStatus } from './scooter_status.entity';
+import { ScooterCharge } from './scooter_charge.entity';
 
 @Controller('scooter')
 export class ScooterController {
@@ -51,6 +54,25 @@ export class ScooterController {
       status_code: HttpStatus.OK,
       data: scooter,
     });
+  }
+
+  @Patch(':id')
+  async update(@Param() params, @Body() scooter: Scooter) {
+    let { id } = params;
+    id = Number(id);
+    const { battery, mileage, latitude, longitude, status_id, charge_id } =
+      scooter;
+    const scooterUpdate: {
+      id: number;
+      battery: number;
+      mileage: number;
+      latitude: number;
+      longitude: number;
+      status_id: ScooterStatus;
+      charge_id: ScooterCharge;
+    } = { id, battery, mileage, latitude, longitude, status_id, charge_id };
+
+    return this.scooterService.update(scooterUpdate);
   }
 
   @Post()
