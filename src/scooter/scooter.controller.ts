@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { ScooterService } from './scooter.service';
 import { Scooter } from './scooter.entity';
 
@@ -7,8 +7,8 @@ export class ScooterController {
   constructor(private readonly scooterService: ScooterService) {}
 
   @Get()
-  async getAll() {
-    return this.scooterService.getAll();
+  async getAll(@Query('x') x, @Query('y') y, @Query('radius') radius) {
+    return this.scooterService.getAll(x, y, radius);
   }
 
   @Post()
