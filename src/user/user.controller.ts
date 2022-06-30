@@ -38,5 +38,20 @@ export class UserController {
     });
   }
 
+  @Get(':sessionId')
+  async getUser(@Param() params, @Res() res: Response) {
+    const { sessionId } = params;
+    const user = await this.userService.getUser(sessionId);
+    if (!user) {
+      return res.status(HttpStatus.FORBIDDEN).json({
+        status_code: HttpStatus.FORBIDDEN,
+        message: 'id not found',
+      });
+    }
 
+    return res.status(HttpStatus.OK).json({
+      status_code: HttpStatus.OK,
+      data: user,
+    });
+  }
 }

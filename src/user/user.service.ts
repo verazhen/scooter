@@ -39,4 +39,16 @@ export class UserService {
 
     return userCheck.id;
   }
+
+  async getUser(id: number): Promise<boolean | User> {
+    const [userCheck] = await this.userRepository.find({
+      where: [{ id: id }],
+      relations: ['role'],
+    });
+
+    if (!userCheck) return false;
+    console.log(userCheck);
+
+    return userCheck;
+  }
 }
