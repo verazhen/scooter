@@ -2,14 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
 import { User } from './user.entity';
-// import { bcryptAsync } from '../util/util';
-// import * as CryptoJS from 'crypto-js';
 import * as bcrypt from 'bcrypt';
-
 const saltOrRounds = 10;
 const password = 'random_password';
-
-// const salt = "123";
 
 @Injectable()
 export class UserService {
@@ -47,7 +42,6 @@ export class UserService {
     });
 
     if (!userCheck) return false;
-    console.log(userCheck);
 
     return userCheck;
   }
